@@ -20,7 +20,7 @@ zerops:
         # node_modules needed at runtime. The migration script
         # is listed separately (outside the bundle).
         - .output
-        - migrate.js
+        - migrate.cjs
       cache:
         # node_modules cached between builds — npm ci restores
         # from cache, skipping network downloads on unchanged deps.
@@ -43,9 +43,10 @@ zerops:
         # zsc execOnce runs the migration exactly once per app
         # version across all containers. Without it, every container
         # in a multi-container deploy races to run the same SQL.
-        # NODE_PATH: pg is bundled into .output/server/node_modules
-        # by Nitro — migrate.js needs it pointed there explicitly.
-        - zsc execOnce ${appVersionId} -- sh -c 'NODE_PATH=/var/www/.output/server/node_modules node migrate.js'
+        # NODE_PATH points to pg bundled by Nitro into
+        # .output/server/node_modules. CJS require() respects
+        # NODE_PATH; ESM import does not — hence migrate.cjs.
+        - zsc execOnce ${appVersionId} -- sh -c 'NODE_PATH=/var/www/.output/server/node_modules node migrate.cjs'
       ports:
         - port: 3000
           httpSupport: true
@@ -85,8 +86,9 @@ zerops:
       os: ubuntu
       initCommands:
         # Migration runs on dev too — database is ready when
-        # the developer SSHs in.
-        - zsc execOnce ${appVersionId} -- node migrate.js
+        # the developer SSHs in. In dev, node_modules/ is
+        # deployed so pg resolves from the standard path.
+        - zsc execOnce ${appVersionId} -- node migrate.cjs
       ports:
         - port: 3000
           httpSupport: true
