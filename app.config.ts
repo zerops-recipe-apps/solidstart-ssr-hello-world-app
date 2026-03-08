@@ -1,8 +1,8 @@
 import { defineConfig } from "@solidjs/start/config";
 import { readFileSync } from "fs";
 
-// Read @solidjs/start version at build time — injected into the server
-// bundle as a constant (no node_modules access at runtime in Nitro).
+// Read @solidjs/start version at build time — injected as a
+// constant into both the Vite dev server and Nitro prod bundle.
 let solidStartVersion = "unknown";
 try {
   const pkg = JSON.parse(
@@ -19,9 +19,11 @@ export default defineConfig({
     // — a self-contained Nitro bundle. No node_modules needed
     // at runtime.
     preset: "node-server",
-
-    // Build-time constants injected into the Nitro server bundle.
-    // At runtime these are literals, not env vars — safe and fast.
+  },
+  vite: {
+    // Build-time constants: replaced as string literals in both
+    // the Vite dev server (SSR mode) and the Nitro prod bundle.
+    // Declared in src/global.d.ts for TypeScript.
     define: {
       __SOLID_START_VERSION__: JSON.stringify(solidStartVersion),
       __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
