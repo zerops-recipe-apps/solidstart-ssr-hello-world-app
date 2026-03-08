@@ -43,7 +43,9 @@ zerops:
         # zsc execOnce runs the migration exactly once per app
         # version across all containers. Without it, every container
         # in a multi-container deploy races to run the same SQL.
-        - zsc execOnce ${appVersionId} -- node migrate.js
+        # NODE_PATH: pg is bundled into .output/server/node_modules
+        # by Nitro — migrate.js needs it pointed there explicitly.
+        - zsc execOnce ${appVersionId} -- sh -c 'NODE_PATH=/var/www/.output/server/node_modules node migrate.js'
       ports:
         - port: 3000
           httpSupport: true
