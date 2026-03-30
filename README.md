@@ -1,9 +1,9 @@
 # SolidStart SSR Hello World Recipe App
 
-<!--#ZEROPS_EXTRACT_START:intro#-->
+<!-- #ZEROPS_EXTRACT_START:intro# -->
 A server-rendered [SolidStart](https://start.solidjs.com) application connected to a [PostgreSQL](https://zerops.io/postgresql) database, running on [Zerops](https://zerops.io). SolidStart's Nitro engine produces a self-contained server bundle — no `node_modules` deployed at runtime.
 Used within [SolidStart SSR Hello World recipe](https://app.zerops.io/recipes/solidstart-ssr-hello-world) for [Zerops](https://zerops.io) platform.
-<!--#ZEROPS_EXTRACT_END:intro#-->
+<!-- #ZEROPS_EXTRACT_END:intro# -->
 
 ⬇️ **Full recipe page and deploy with one-click**
 
@@ -16,7 +16,7 @@ Used within [SolidStart SSR Hello World recipe](https://app.zerops.io/recipes/so
 ### 1. Adding `zerops.yaml`
 The main application configuration file you place at the root of your repository, it tells Zerops how to build, deploy and run your application.
 
-<!--#ZEROPS_EXTRACT_START:integration-guide#-->
+<!-- #ZEROPS_EXTRACT_START:integration-guide# -->
 ```yaml
 # SolidStart SSR Hello World — Zerops build & deploy pipeline.
 # Two setups: 'prod' for optimized server builds, 'dev' for SSH
@@ -123,4 +123,4 @@ zerops:
       # SSH in and run: npm run dev
       start: zsc noop --silent
 ```
-<!--#ZEROPS_EXTRACT_END:integration-guide#-->
+<!-- #ZEROPS_EXTRACT_END:integration-guide# -->
