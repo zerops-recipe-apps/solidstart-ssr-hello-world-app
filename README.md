@@ -27,7 +27,7 @@ zerops:
   # all runtime dependencies — no node_modules needed at runtime.
   - setup: prod
     build:
-      base: nodejs@22
+      base: nodejs@24
       buildCommands:
         # npm ci installs exact locked versions. Fails fast if
         # package-lock.json is out of sync — intentional for prod.
@@ -56,7 +56,7 @@ zerops:
           path: /
 
     run:
-      base: nodejs@22
+      base: nodejs@24
       # initCommands run once per container start, before the
       # start command — every deploy, restart, and scale-up event.
       initCommands:
@@ -87,7 +87,7 @@ zerops:
   # The container stays idle (zsc noop) — developer drives via SSH.
   - setup: dev
     build:
-      base: nodejs@22
+      base: nodejs@24
       # Ubuntu for the build container: richer toolset for
       # interactive development (git, curl, editors pre-installed).
       os: ubuntu
@@ -102,7 +102,7 @@ zerops:
         - node_modules
 
     run:
-      base: nodejs@22
+      base: nodejs@24
       os: ubuntu
       initCommands:
         # Migration runs on dev too — database is ready when
